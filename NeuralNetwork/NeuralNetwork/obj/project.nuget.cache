@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "G5MFpOzO9V0EEBomXzObfVvW6NYD0toHUOP8TVui57ZD42vo5N1mj0HvQDkjObJBbwisLz755N9HWgWzl+nEag==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\itai1\\Source\\Repos\\NeuralNetwork\\NeuralNetwork\\NeuralNetwork.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\itai1\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\itai1\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

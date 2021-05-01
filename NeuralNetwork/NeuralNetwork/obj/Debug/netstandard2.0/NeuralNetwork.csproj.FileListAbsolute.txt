@@ -1,0 +1,9 @@
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\bin\Debug\netstandard2.0\NeuralNetwork.deps.json
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\bin\Debug\netstandard2.0\NeuralNetwork.dll
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\bin\Debug\netstandard2.0\NeuralNetwork.pdb
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\obj\Debug\netstandard2.0\NeuralNetwork.AssemblyInfoInputs.cache
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\obj\Debug\netstandard2.0\NeuralNetwork.AssemblyInfo.cs
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\obj\Debug\netstandard2.0\NeuralNetwork.csproj.CoreCompileInputs.cache
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\obj\Debug\netstandard2.0\NeuralNetwork.dll
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\obj\Debug\netstandard2.0\NeuralNetwork.pdb
+C:\Users\itai1\Source\Repos\NeuralNetwork\NeuralNetwork\obj\Debug\netstandard2.0\NeuralNetwork.csprojAssemblyReference.cache

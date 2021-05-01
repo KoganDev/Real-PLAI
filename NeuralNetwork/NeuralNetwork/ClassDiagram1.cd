@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="NeuralNetwork.Node">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAEABAAAAACgACAABAgAABAAQAAAgA=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ingoingArcs" />
+      <Property Name="outgoingArcs" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="NeuralNetwork.Arc">
+    <Position X="7.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAABAAgAAAAAAAAABA=</HashCode>
+      <FileName>Arc.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="fromNode" />
+      <Property Name="toNode" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="NeuralNetwork.Layer">
+    <Position X="4.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABEAEAAAAAABAAgAAAAAAACAAAAAAIAAA=</HashCode>
+      <FileName>Layer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="bias" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="nodesInLayer" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="NeuralNetwork.Graph">
+    <Position X="1.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIIYAgAkQEAQAgAABCAABABAAA4IBCIAABA=</HashCode>
+      <FileName>Graph.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="layers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="NeuralNetwork.Experience">
+    <Position X="5.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAgAIABAAAAAAA=</HashCode>
+      <FileName>Experience.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.ReplayMemory">
+    <Position X="8.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gABAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAA=</HashCode>
+      <FileName>ReplayMemory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="buffer" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
