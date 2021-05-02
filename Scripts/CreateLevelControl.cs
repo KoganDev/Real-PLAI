@@ -28,6 +28,17 @@ public class CreateLevelControl : MonoBehaviour
     private const string invalidNameMessage = "This name is already taken.\nPlease choose another one.\n";
 
     /// <summary>
+    /// The function makes sure there is a Levels directory to store levels in it and if not it creates a new directory.
+    /// </summary>
+    private void Start()
+    {
+        if(!Directory.Exists(Application.dataPath + "/Levels"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Levels");
+        }
+    }
+
+    /// <summary>
     /// The function tries to create a new level with the name that the user chose - if possible loads the design 
     /// level scene with the new level. The function is called when the ReadyButton is pressed.
     /// </summary>

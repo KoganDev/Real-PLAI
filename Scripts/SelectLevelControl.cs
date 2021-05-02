@@ -35,6 +35,12 @@ public class SelectLevelControl : MonoBehaviour
     /// </summary>
     void Start()
     {
+        // If the levels directory doesn't exists create one
+        if (!Directory.Exists(Application.dataPath + "/Levels"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Levels");
+        }
+
         // This is the path to the folder with all the levels
         folderPath = Application.dataPath + "/Levels";
         // In this list we'll save all the playable level names

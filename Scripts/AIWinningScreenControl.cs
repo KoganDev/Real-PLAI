@@ -17,11 +17,22 @@ public class AIWinningScreenControl : MonoBehaviour
     [SerializeField] private Text numberOfTriesTetx;
     private string numberOfTriesTextContent;
 
+
+    // -------------------------- Temp ----------------------------------
+
+    int countWinnings = 0;
+
     private void Start()
     {
         numberOfTriesTextContent = "Number Of Tries: " + AIController.numberOfTries;
         numberOfTriesTetx.text = numberOfTriesTextContent;
         AIController.numberOfTries = 0;  // Start counting again from zero after winning
+
+        // Temp code to train again automatically
+        countWinnings++;
+        Debug.Log("Won again - " + countWinnings.ToString() + " times");
+        SceneManager.LoadScene(levelSceneName);  // Load The Level Scene Again to Train More Automatically
+
     }
 
 

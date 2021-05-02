@@ -35,4 +35,12 @@ public class MainMenuControl : MonoBehaviour
     {
         SceneManager.LoadScene(selectLevelSceneName);
     }
+
+    /// <summary>
+    /// The function closes the game. The function is called when the ExitButton is pressed.
+    /// </summary>
+    public void ExitClicked()
+    {
+        Application.Quit();
+    }
 }

@@ -262,8 +262,21 @@ public class AIInitiation : MonoBehaviour
         neuronsInLayers.Add(16);
         neuronsInLayers.Add(3);
 
+        // Create the initaiation foldre if it doesn't exists
+        if(!Directory.Exists(Application.dataPath + "/InitiationFolder"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/InitiationFolder");
+        }
+
+        // Create the log folder if it doesn't exists
+        if (!Directory.Exists(Application.dataPath + "/Logs"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Logs");
+        }
+
+
         // Set the file path of the neural networks
-        QNetworkFilePath = Application.dataPath + "/InitiationFolder/QNetwork.txt";
+            QNetworkFilePath = Application.dataPath + "/InitiationFolder/QNetwork.txt";
         targetNetworkFilePath  = Application.dataPath + "/InitiationFolder/TargetNetwork.txt";
         memoriesFilePath = Application.dataPath + "/InitiationFolder/Memories.txt";
 
