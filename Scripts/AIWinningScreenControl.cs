@@ -20,7 +20,7 @@ public class AIWinningScreenControl : MonoBehaviour
 
     // -------------------------- Temp ----------------------------------
 
-    int countWinnings = 0;
+    static int countWinnings = 0;
 
     private void Start()
     {
@@ -28,11 +28,12 @@ public class AIWinningScreenControl : MonoBehaviour
         numberOfTriesTetx.text = numberOfTriesTextContent;
         AIController.numberOfTries = 0;  // Start counting again from zero after winning
 
+        /*
         // Temp code to train again automatically
         countWinnings++;
         Debug.Log("Won again - " + countWinnings.ToString() + " times");
         SceneManager.LoadScene(levelSceneName);  // Load The Level Scene Again to Train More Automatically
-
+        */
     }
 
 

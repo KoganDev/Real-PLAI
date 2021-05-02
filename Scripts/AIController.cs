@@ -84,10 +84,16 @@ public class AIController : MonoBehaviour
 
     private int numberOfIterationsToAct = 5;  // How many iterations should pass every time until the AI can move
     private int numberOfEpochsToUpdateTarget = 45;  // How many epochs should pass every time until we update the Target-Network 
-    private const double epsilon = 0.075;
     private const int minibatchSize = 32;
     private float gama = 0.9f;
     private double learningRate = 0.01;
+
+    // -------------- Epsilon Decay --------------------
+
+    private const double minExpsilon = 0.075;
+    private const double maxExpsilon = 1;
+    private static double epsilon = maxExpsilon;
+    private double decayPerEpoch = 0.01;
 
 
     /// <summary>
@@ -120,6 +126,13 @@ public class AIController : MonoBehaviour
         lost = false;
         // Set scene names so they can be used in case of a win/lost
         currentSceneName = SceneManager.GetActiveScene().name;
+
+        if(AIInitiation.QNetworkExists && AIInitiation.TargetNetworkExists)
+        {
+            // If the network exists no need to use epsilon decay
+            Debug.Log("Constant Epsilon");
+            epsilon = minExpsilon;
+        }
 
         numberOfTries++;
         NumberOfTriesContent = "Number Of Tries: " + numberOfTries.ToString();
@@ -550,6 +563,18 @@ public class AIController : MonoBehaviour
 
             stateS = (double[])sNext.Clone();
             numberOfEpochs++;
+
+            // Epsilon Decay
+            if(epsilon > minExpsilon)
+            {
+                epsilon = epsilon - decayPerEpoch;
+                Debug.Log("Epsilon: " + epsilon.ToString("F"));
+                if(epsilon < minExpsilon)
+                {
+                    epsilon = minExpsilon;
+                    Debug.Log("Epsilon At Minimum. Epsilon: " + epsilon.ToString("F"));
+                }
+            }
 
             // Pass state s to the Q-Network
             QNetwork.PassStateToQNetwork(stateS);

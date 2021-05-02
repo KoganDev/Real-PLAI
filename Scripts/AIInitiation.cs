@@ -12,6 +12,9 @@ public class AIInitiation : MonoBehaviour
 
     private List<int> neuronsInLayers;
 
+    public static bool QNetworkExists = false;
+    public static bool TargetNetworkExists = false;
+
     // ------------------------ Text File Paths ---------------------------
 
     public static string QNetworkFilePath;
@@ -103,6 +106,7 @@ public class AIInitiation : MonoBehaviour
         }
         else
         {
+            QNetworkExists = true;
             string[] lines = File.ReadAllLines(filePath);
             AIController.QNetwork = Decode(lines);
         }
@@ -125,6 +129,7 @@ public class AIInitiation : MonoBehaviour
         }
         else
         {
+            TargetNetworkExists = true;
             string[] lines = File.ReadAllLines(filePath);
             AIController.TargetNetwork = Decode(lines);
         }

@@ -50,6 +50,8 @@ public class LevelControl : MonoBehaviour
 
     [SerializeField] private PolygonCollider2D backgroungCollider;
 
+    [SerializeField] private CinemachineConfiner bordersConfiner;
+
     // ------------------------ General Level Variables ---------------------------
 
     [SerializeField] private Rigidbody2D destination;
@@ -78,6 +80,9 @@ public class LevelControl : MonoBehaviour
         points[2] = new Vector2(colliderCoords.xMax, colliderCoords.yMin);
         points[3] = new Vector2(colliderCoords.xMax, colliderCoords.yMax);
         backgroungCollider.points = points;
+
+        bordersConfiner.InvalidatePathCache();
+        bordersConfiner.m_BoundingShape2D = backgroungCollider;
 
         // Change the player's position
         characterRigidBody.transform.position = playerPosition;
