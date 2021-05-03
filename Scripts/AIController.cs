@@ -80,6 +80,18 @@ public class AIController : MonoBehaviour
     [SerializeField] private Text RewardsSumText;
     private string RewardsSumTextContent = "";
 
+    [SerializeField] private Text TryTimeText;
+    private string TryTimeTextContent = "Time: ";
+
+    public static System.Diagnostics.Stopwatch tryTime = new System.Diagnostics.Stopwatch();
+
+    [SerializeField] private Text overallTimeText;
+    private string overallTimeTextContent = "Overall Time: ";
+    public static bool startedTime = false;
+
+    public static System.Diagnostics.Stopwatch overallTime = new System.Diagnostics.Stopwatch();
+
+
     // ------------------------ AI Hyperparameters ---------------------------
 
     private int numberOfIterationsToAct = 5;  // How many iterations should pass every time until the AI can move
@@ -133,6 +145,17 @@ public class AIController : MonoBehaviour
             Debug.Log("Constant Epsilon");
             epsilon = minExpsilon;
         }
+
+        // Start the overall time if needed
+        if(!startedTime)
+        {
+            overallTime.Start();
+            startedTime = true;
+        }
+
+        // Start the level's time again
+        tryTime.Restart();
+        tryTime.Start();
 
         numberOfTries++;
         NumberOfTriesContent = "Number Of Tries: " + numberOfTries.ToString();
@@ -519,6 +542,16 @@ public class AIController : MonoBehaviour
     /// </summary>
     void Update()
     {
+        // Measure overall time and show it on the screen
+        System.TimeSpan time = overallTime.Elapsed;
+        string elapsedTime = System.String.Format("{0:00}:{1:00}:{2:00}", time.Hours, time.Minutes, time.Seconds);
+        overallTimeText.text = overallTimeTextContent + elapsedTime;
+
+        // Measure time and show it on the screen
+        time = tryTime.Elapsed;
+        elapsedTime = System.String.Format("{0:00}:{1:00}:{2:00}", time.Hours, time.Minutes, time.Seconds);
+        TryTimeText.text = TryTimeTextContent + elapsedTime;
+
         if(firstState)
         {
             // Get state s
@@ -594,6 +627,9 @@ public class AIController : MonoBehaviour
         if (won)
         {
             SaveAll();
+            // Stop meausring time
+            tryTime.Stop();
+            overallTime.Stop();
             SceneManager.LoadScene(AIWinningScreen);
         }
         else if (lost)

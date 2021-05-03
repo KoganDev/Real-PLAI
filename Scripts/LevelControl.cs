@@ -93,15 +93,18 @@ public class LevelControl : MonoBehaviour
     /// </summary>
     public void ClickedBack()
     {
-        // Load the main menu again
-        SceneManager.LoadScene(mainMenuSceneName);
         // Get the current scene
         Scene scene = SceneManager.GetActiveScene();
         // If the AI plays we need to save the neural networks and the memories
         if(scene.name == AISceneName)
         {
             AIController.SaveAll();
+            AIController.overallTime.Reset();
+            AIController.startedTime = false;
+            AIController.numberOfTries = 0;
         }
+        // Load the main menu again
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 
     /// <summary>
