@@ -74,16 +74,16 @@ public class LevelControl : MonoBehaviour
         LoadLevel();
 
         // Calculate of how many rectangles the current level is made of
-        rectangles = ((int)Mathf.Ceil(colliderCoords.xMax - colliderCoords.xMin) / DesignLevelControl.backgroundWidth);
+        rectangles = ((int)Mathf.Ceil((colliderCoords.xMax + 1) - colliderCoords.xMin) / DesignLevelControl.backgroundWidth);
 
         // This is the correct way to calculate the width of the level
         colliderCoords.xMax = rectangles * 23.75f;
 
-        // Create the level's borders
-        CreateBorders();
-
         // Create the camera's borders
         UpdateCameraBodrers();
+
+        // Create the level's borders
+        CreateBorders();
 
         // Change the player's position
         characterRigidBody.transform.position = playerPosition;
