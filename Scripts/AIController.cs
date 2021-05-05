@@ -71,6 +71,8 @@ public class AIController : MonoBehaviour
     public static int numberOfTries = 0;
     private static int numberOfIteration = 0;  // The number of frames since the beginning of the level
     private int numberOfEpochs = 0;  // The number of times we preformed an update on our Q-Network
+    private int levelTime;
+    private int secondsPerRectangle = 20;
 
     // ------------------------ UI Variables ---------------------------
 
@@ -91,7 +93,6 @@ public class AIController : MonoBehaviour
 
     public static System.Diagnostics.Stopwatch overallTime = new System.Diagnostics.Stopwatch();
 
-
     // ------------------------ AI Hyperparameters ---------------------------
 
     private int numberOfIterationsToAct = 5;  // How many iterations should pass every time until the AI can move
@@ -107,6 +108,18 @@ public class AIController : MonoBehaviour
     private static double epsilon = maxExpsilon;
     private double decayPerEpoch = 0.01;
 
+
+    /// <summary>
+    /// The function caclualtes how much time to give to the AI to solve the current level.
+    /// </summary>
+    private void CalculateLevelTime()
+    {
+        float xMax = LevelControl.colliderCoords.xMax;
+        float xMin = LevelControl.colliderCoords.xMin;
+        float levelWidth = xMax - xMin;
+        int rectangles = ((int)Mathf.Ceil(levelWidth) / DesignLevelControl.backgroundWidth);
+        levelTime = rectangles * secondsPerRectangle;  // Level time in seconds
+    }
 
     /// <summary>
     ///The function initates the variables that are related to the character of the AI - how he looks like and moves.
@@ -138,8 +151,10 @@ public class AIController : MonoBehaviour
         lost = false;
         // Set scene names so they can be used in case of a win/lost
         currentSceneName = SceneManager.GetActiveScene().name;
+        // Calculate level time in seconds
+        CalculateLevelTime();
 
-        if(AIInitiation.QNetworkExists && AIInitiation.TargetNetworkExists)
+        if (AIInitiation.QNetworkExists && AIInitiation.TargetNetworkExists)
         {
             // If the network exists no need to use epsilon decay
             Debug.Log("Constant Epsilon");
@@ -449,18 +464,14 @@ public class AIController : MonoBehaviour
         {
             // If we got to the end give the largest prize
             sum = 10;
-            //sum = 100;
         }
-        else if(lost || mul <= 0.0001)
+        else if(lost)
         {
             lost = true;
             sum = -5;
-            //sum = -50;
         }
         else
         {
-            //double lastDistance = Mathf.Sqrt(Mathf.Pow(endPosition.x - lastCoordinates.x, 2) + Mathf.Pow(endPosition.y - lastCoordinates.y, 2));
-            //double currentDistance = Mathf.Sqrt(Mathf.Pow(endPosition.x - AIRigidBody.position.x, 2) + Mathf.Pow(endPosition.y - AIRigidBody.position.y, 2));
             double lastDistance = Mathf.Abs(endPosition.x - lastCoordinates.x);
             double currentDistance = Mathf.Abs(endPosition.x - AIRigidBody.position.x);
             if (lastDistance > currentDistance)
@@ -536,11 +547,21 @@ public class AIController : MonoBehaviour
         SaveAll();
     }
 
+    /// <summary>
+    /// Check if the AI's time to solve the level is over. If so it means that the AI lost.
+    /// </summary>
+    private void CheckIfTimeOver()
+    {
+        if(tryTime.Elapsed.TotalSeconds >= levelTime)
+        {
+            lost = true;
+        }
+    }
 
     /// <summary>
-    /// The function is in charge of the AI. The function is called once per frame and recieves nothing.
+    /// The function shows the AI's time on screen - the overall time and the time for the current try.
     /// </summary>
-    void Update()
+    private void ShowTimeOnScreen()
     {
         // Measure overall time and show it on the screen
         System.TimeSpan time = overallTime.Elapsed;
@@ -551,8 +572,17 @@ public class AIController : MonoBehaviour
         time = tryTime.Elapsed;
         elapsedTime = System.String.Format("{0:00}:{1:00}:{2:00}", time.Hours, time.Minutes, time.Seconds);
         TryTimeText.text = TryTimeTextContent + elapsedTime;
+    }
 
-        if(firstState)
+
+    /// <summary>
+    /// The function is in charge of the AI. The function is called once per frame and recieves nothing.
+    /// </summary>
+    void Update()
+    {
+        ShowTimeOnScreen();
+
+        if (firstState)
         {
             // Get state s
             GetEnvironmentState();
@@ -564,7 +594,6 @@ public class AIController : MonoBehaviour
             QNetwork.ForwardPropagation();
             // Get an action to perform according to the epsilon greedy policy
             chosenAction = GetAction();
-            //chosenAction = Action.MoveRight;  // --------------------
             // Perform the given action
             PerformAction(chosenAction);
             lastCoordinates = AIRigidBody.position;
@@ -623,13 +652,17 @@ public class AIController : MonoBehaviour
         // Update the charcter's animation every frame no matter what
         AnimationManager();
 
+        // Check if the AI's time is over
+        CheckIfTimeOver();
+
         // Switch scenes in case the agent won/lost
         if (won)
         {
-            SaveAll();
             // Stop meausring time
             tryTime.Stop();
             overallTime.Stop();
+            // Save the networks and the memories
+            SaveAll();
             SceneManager.LoadScene(AIWinningScreen);
         }
         else if (lost)

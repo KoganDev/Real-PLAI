@@ -31,7 +31,7 @@ public class DesignLevelControl : MonoBehaviour
     // ------------------------ Expand Level Variables ---------------------------
 
     private int xAxisValue = 24;
-    private int backgroundWidth = 24;
+    public static int backgroundWidth = 24;
     private int yStart = 0;
     private int yEnd = 15;
 
@@ -250,9 +250,9 @@ public class DesignLevelControl : MonoBehaviour
             }
         }
 
-        // Increase the size of our backgroundCollider
-        backgroundCollider.size = new Vector2(backgroundCollider.size.x + backgroundWidth, backgroundCollider.size.y);
-        backgroundCollider.offset = new Vector2(backgroundCollider.offset.x + backgroundWidth / 2, backgroundCollider.offset.y);
+        // Increase the size of our backgroundCollider - No need to use backgroundCollider here
+        //backgroundCollider.size = new Vector2(backgroundCollider.size.x + backgroundWidth, backgroundCollider.size.y);
+        //backgroundCollider.offset = new Vector2(backgroundCollider.offset.x + backgroundWidth / 2, backgroundCollider.offset.y);
         // Increase the x coordinate so we can add a new background next to the one we currently added
         xAxisValue += backgroundWidth;
 

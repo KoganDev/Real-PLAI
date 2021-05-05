@@ -34,8 +34,8 @@ public class LevelControl : MonoBehaviour
 
     // ------------------------ Level Borders Variables ---------------------------
 
-    private FurthestCoordinates colliderCoords;
-    struct FurthestCoordinates
+    public static FurthestCoordinates colliderCoords;
+    public struct FurthestCoordinates
     {
         public float xMin;
         public float xMax;
