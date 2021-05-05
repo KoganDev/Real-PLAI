@@ -34,6 +34,8 @@ public class LevelControl : MonoBehaviour
 
     // ------------------------ Level Borders Variables ---------------------------
 
+    public static int rectangles;
+
     public static FurthestCoordinates colliderCoords;
     public struct FurthestCoordinates
     {
@@ -71,8 +73,27 @@ public class LevelControl : MonoBehaviour
         // Load the level's tiles
         LoadLevel();
 
+        // Calculate of how many rectangles the current level is made of
+        rectangles = ((int)Mathf.Ceil(colliderCoords.xMax - colliderCoords.xMin) / DesignLevelControl.backgroundWidth);
+
+        // This is the correct way to calculate the width of the level
+        colliderCoords.xMax = rectangles * 23.75f;
+
+        // Create the level's borders
         CreateBorders();
 
+        // Create the camera's borders
+        UpdateCameraBodrers();
+
+        // Change the player's position
+        characterRigidBody.transform.position = playerPosition;
+    }
+
+    /// <summary>
+    /// The function updates the camera's borders so it will stay in the level's screen.
+    /// </summary>
+    private void UpdateCameraBodrers()
+    {
         // Update the borders of the screen so the camera can stay inside the game screen
         Vector2[] points = backgroungCollider.points;
         points[0] = new Vector2(colliderCoords.xMin, colliderCoords.yMax);
@@ -81,11 +102,9 @@ public class LevelControl : MonoBehaviour
         points[3] = new Vector2(colliderCoords.xMax, colliderCoords.yMax);
         backgroungCollider.points = points;
 
+        // Update the borders of the cinemachine confiner - makes the camera stay inside the level
         bordersConfiner.InvalidatePathCache();
         bordersConfiner.m_BoundingShape2D = backgroungCollider;
-
-        // Change the player's position
-        characterRigidBody.transform.position = playerPosition;
     }
 
     /// <summary>
@@ -112,22 +131,27 @@ public class LevelControl : MonoBehaviour
     /// </summary>
     private void CreateBorders()
     {
-        // I choose a random number as the soze of the border
+        // I choose a meaningless number as the size of the border
         float sizeOfBorder = 5;
-        // The size of the left border will be: width - my random number. height: the max y coordinate minus the min y coordinate
-        leftBorder.size = new Vector2(sizeOfBorder, colliderCoords.yMax - colliderCoords.yMin + 1);
-        leftBorder.transform.position = new Vector3(colliderCoords.xMin - sizeOfBorder / 2, colliderCoords.yMax / 2, leftBorder.transform.position.y);
-
-        // The size of the left border will be: width - my random number. height: the max y coordinate minus the min y coordinate
-        rightBorder.size = new Vector2(sizeOfBorder, colliderCoords.yMax - colliderCoords.yMin + 1);
-        rightBorder.transform.position = new Vector3(colliderCoords.xMax + sizeOfBorder / 2, colliderCoords.yMax / 2, rightBorder.transform.position.y);
-
         float xSizeOfLevel = colliderCoords.xMax - colliderCoords.xMin;
-        buttomBorder.size = new Vector2(xSizeOfLevel, sizeOfBorder);
-        buttomBorder.transform.position = new Vector3(colliderCoords.xMin + xSizeOfLevel / 2, colliderCoords.xMin - sizeOfBorder / 2, buttomBorder.transform.position.z);
+        float ySizeOfLevel = colliderCoords.yMax - colliderCoords.yMin;
+        float zCoor = leftBorder.transform.position.z;  // The z coordinate doesn't really matter
 
+        // The size of the left border will be: width - my meaningless number. height: the max y coordinate minus the min y coordinate
+        leftBorder.size = new Vector2(sizeOfBorder, ySizeOfLevel);
+        leftBorder.transform.position = new Vector3(colliderCoords.xMin - sizeOfBorder / 2, colliderCoords.yMax / 2, zCoor);
+
+        // The size of the right border will be: width - my meaningless number. height: the max y coordinate minus the min y coordinate
+        rightBorder.size = new Vector2(sizeOfBorder, ySizeOfLevel);
+        rightBorder.transform.position = new Vector3(colliderCoords.xMax + sizeOfBorder / 2, colliderCoords.yMax / 2, zCoor);
+
+        // The size of the buttom border will be: width - the max x coordinate minus the min x coordinate. height: my meaningless number
+        buttomBorder.size = new Vector2(xSizeOfLevel, sizeOfBorder);
+        buttomBorder.transform.position = new Vector3(colliderCoords.xMin + xSizeOfLevel / 2, colliderCoords.yMin - sizeOfBorder / 2, zCoor);
+
+        // The size of the top border will be: width - the max x coordinate minus the min x coordinate. height: my meaningless number
         topBorder.size = new Vector2(xSizeOfLevel, sizeOfBorder);
-        topBorder.transform.position = new Vector3(colliderCoords.xMin + xSizeOfLevel / 2, colliderCoords.xMax - sizeOfBorder * 1 - 1.4f, topBorder.transform.position.z);
+        topBorder.transform.position = new Vector3(colliderCoords.xMin + xSizeOfLevel / 2, colliderCoords.yMax + sizeOfBorder / 2, zCoor);
     }
 
     /// <summary>
@@ -192,7 +216,6 @@ public class LevelControl : MonoBehaviour
         }
 
         // Need to add a bit to the coordinates so it will match correctly
-        colliderCoords.xMax += 0.75f;
         colliderCoords.yMax += 0.85f;
     }
 

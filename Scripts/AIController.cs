@@ -114,11 +114,7 @@ public class AIController : MonoBehaviour
     /// </summary>
     private void CalculateLevelTime()
     {
-        float xMax = LevelControl.colliderCoords.xMax;
-        float xMin = LevelControl.colliderCoords.xMin;
-        float levelWidth = xMax - xMin;
-        int rectangles = ((int)Mathf.Ceil(levelWidth) / DesignLevelControl.backgroundWidth);
-        levelTime = rectangles * secondsPerRectangle;  // Level time in seconds
+        levelTime = LevelControl.rectangles * secondsPerRectangle;  // Level time in seconds
     }
 
     /// <summary>
