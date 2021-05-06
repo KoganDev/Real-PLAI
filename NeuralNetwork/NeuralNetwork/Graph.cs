@@ -558,16 +558,14 @@ namespace NeuralNetwork
 
                 lossFunctionLog += lossFunction;
             }
-            File.AppendAllText(logFileAddress, "\n\nLoss function after : " + (lossFunctionLog / minibatch.Count).ToString() + "\n");
+            double newAvgLossFunction = lossFunctionLog / minibatch.Count;
+            File.AppendAllText(logFileAddress, "\n\nLoss function after : " + newAvgLossFunction.ToString() + "\n");
 
-            if (lossBefore < (lossFunctionLog / minibatch.Count))
+            if (newAvgLossFunction - lossBefore >= 0.4)  // Learn only if good or a little bad
             {
-                File.AppendAllText(logFileAddress, "\nError\nThe graph before updating: \n\n" + temp.ToString());
-
-                File.AppendAllText(logFileAddress, "\nThe graph after updating: \n\n" + this.ToString());
-                //File.AppendAllText(logFileAddress, "\nError: The Loss Function had grown\n");
-                //this.CopyWeightsAndBiases(temp);
-                //File.AppendAllText(logFileAddress, "The changes to the Q-Network have been deleted.\n\n");
+                File.AppendAllText(logFileAddress, "\nError: The Loss Function had grown\n");
+                this.CopyWeightsAndBiases(temp);
+                File.AppendAllText(logFileAddress, "The changes to the Q-Network have been deleted.\n\n");
             }
 
             // ------------------------------
