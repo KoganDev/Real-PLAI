@@ -30,28 +30,42 @@ public class AIWinningScreenControl : MonoBehaviour
 
     private void Start()
     {
+        string overallTimeTemp; // 
+        string tryTimeTemp; // 
+        int numberOfTriesTemp; // 
+
+
         // Get number of tries
         numberOfTriesText.text = numberOfTriesTextContent + AIController.numberOfTries;
+
+        numberOfTriesTemp = AIController.numberOfTries; // 
+
         AIController.numberOfTries = 0;  // Start counting again from zero after winning
 
         // Get last try time
         System.TimeSpan time = AIController.tryTime.Elapsed;
         string elapsedTime = System.String.Format("{0:00}:{1:00}:{2:00}", time.Hours, time.Minutes, time.Seconds);
+
+        tryTimeTemp = elapsedTime; // 
+
         winningTimeText.text = winningTimeTextContent + elapsedTime;
 
         // Get overall time
         time = AIController.overallTime.Elapsed;
         elapsedTime = System.String.Format("{0:00}:{1:00}:{2:00}", time.Hours, time.Minutes, time.Seconds);
         overallTimeText.text = overallTimeTextContent + elapsedTime;
+
+        overallTimeTemp = elapsedTime; // 
+
         AIController.overallTime.Reset();  // Reset overall time
         AIController.startedTime = false;
 
-        /*
         // Temp code to train again automatically
-        countWinnings++;
-        Debug.Log("Won again - " + countWinnings.ToString() + " times");
-        SceneManager.LoadScene(levelSceneName);  // Load The Level Scene Again to Train More Automatically
-        */
+        countWinnings++; // 
+        Debug.Log("Won " + countWinnings.ToString() + " times"); // 
+        Debug.Log("Time: " + overallTimeTemp + " Try Time: " + tryTimeTemp + " tries: " + numberOfTriesTemp); // 
+
+        SceneManager.LoadScene(levelSceneName);  // Load The Level Scene Again to Train More Automatically // 
     }
 
 

@@ -105,6 +105,7 @@ public class AIController : MonoBehaviour
 
     private const double minExpsilon = 0.075;
     private const double maxExpsilon = 1;
+    //private static double epsilon = minExpsilon;
     private static double epsilon = maxExpsilon;
     private double decayPerEpoch = 0.01;
 
