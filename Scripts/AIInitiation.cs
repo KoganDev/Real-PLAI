@@ -281,12 +281,9 @@ public class AIInitiation : MonoBehaviour
 
 
         // Set the file path of the neural networks
-            QNetworkFilePath = Application.dataPath + "/InitiationFolder/QNetwork.txt";
+        QNetworkFilePath = Application.dataPath + "/InitiationFolder/QNetwork.txt";
         targetNetworkFilePath  = Application.dataPath + "/InitiationFolder/TargetNetwork.txt";
         memoriesFilePath = Application.dataPath + "/InitiationFolder/Memories.txt";
-
-        AIController.specialLog = Application.dataPath + "/InitiationFolder/LOG.txt";
-        File.WriteAllText(AIController.specialLog, "");
 
         // Set the new log file path 
         SetLogAddress();  // After the function is done we can remove the function from the AI controller

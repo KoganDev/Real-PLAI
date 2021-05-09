@@ -12,7 +12,6 @@ public class AIController : MonoBehaviour
     // ------------------------ Log Variables ---------------------------
     
     public static string logPath;
-    public static string specialLog;
 
     // ------------------------ Scene Names ---------------------------
 
@@ -175,8 +174,6 @@ public class AIController : MonoBehaviour
         RewardsSumTextContent = "The Sum Of Rewards: " + sumOfRewards.ToString("F");
         RewardsSumText.text = RewardsSumTextContent;
 
-
-        File.AppendAllText(specialLog, "\n\n---------Starting----------\n\n");
         File.AppendAllText(logPath, "\n\n---------Starting----------\n\n");
     }
 
@@ -509,24 +506,6 @@ public class AIController : MonoBehaviour
     }
 
     /// <summary>
-    /// The function checks whether the two given arrays contain the same values - the same states.
-    /// </summary>
-    /// <param name="s">The first array to compare - the first state.</param>
-    /// <param name="sNext">The second array to compare - the second state.</param>
-    /// <returns>The function true true if the arrays are similar and false otherwise</returns>
-    private bool Comp(double[] s, double[] sNext)
-    {
-        for(int index=0; index < s.Length; index++)
-        {
-            if(s[index] != sNext[index])
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /// <summary>
     /// The function saves a new memory to the AI's memories - adds a memory to the experience replay buffer.
     /// </summary>
     /// <param name="r">A reward</param>
@@ -535,7 +514,6 @@ public class AIController : MonoBehaviour
     {
         // Check if the state s' is terminal
         bool isTerminal = (won || lost) ? true : false;
-        File.AppendAllText(specialLog, "is s equal to s'? " + Comp(s, sNext).ToString() + "\n");
         memories.Enqueue(new Experience(s, (int)a, r, sNext, isTerminal));
     }
 
