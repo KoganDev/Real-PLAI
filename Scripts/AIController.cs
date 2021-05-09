@@ -55,8 +55,8 @@ public class AIController : MonoBehaviour
     public static Graph TargetNetwork;
     public static ReplayMemory memories;
     private double sumOfRewards = 0.0;
-    private enum Action { MoveLeft, MoveRight, Jump };
-    private const int numberOfActions = 3;
+    private enum Action { MoveLeft, MoveRight, Jump, RightJump, LeftJump};
+    private const int numberOfActions = 5;
 
     // ------------------------ General AI Variables ---------------------------
 
@@ -105,7 +105,6 @@ public class AIController : MonoBehaviour
 
     private const double minExpsilon = 0.075;
     private const double maxExpsilon = 1;
-    //private static double epsilon = minExpsilon;
     private static double epsilon = maxExpsilon;
     private double decayPerEpoch = 0.01;
 
@@ -440,6 +439,24 @@ public class AIController : MonoBehaviour
             case Action.Jump:
                 {
                     if(AICollider.IsTouchingLayers(ground))
+                    {
+                        Jump();
+                    }
+                    break;
+                }
+            case Action.LeftJump:
+                {
+                    MoveLeft();
+                    if (AICollider.IsTouchingLayers(ground))
+                    {
+                        Jump();
+                    }
+                    break;
+                }
+            case Action.RightJump:
+                {
+                    MoveRight();
+                    if (AICollider.IsTouchingLayers(ground))
                     {
                         Jump();
                     }

@@ -265,7 +265,7 @@ public class AIInitiation : MonoBehaviour
         neuronsInLayers.Add(16);
         neuronsInLayers.Add(16);
         neuronsInLayers.Add(16);
-        neuronsInLayers.Add(3);
+        neuronsInLayers.Add(5); // ***
 
         // Create the initaiation foldre if it doesn't exists
         if(!Directory.Exists(Application.dataPath + "/InitiationFolder"))
